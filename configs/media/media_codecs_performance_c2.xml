@@ -23,6 +23,7 @@
 -->
 
 <MediaCodecs>
+    <Include href="media_codecs_dolby_audio.xml" />
     <Decoders>
         <MediaCodec name="c2.qti.avc.decoder" type="video/avc" update="true">
             <Limit name="measured-frame-rate-320x240" range="569-573" /> <!-- N=108 v98%=1.1 -->
