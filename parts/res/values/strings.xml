@@ -21,10 +21,6 @@
     <string name="device_cutout_title">Cutout Option</string>
     <string name="device_pill_style_notch">Pill-style Notch</string>
 
-    <!-- Ambient settings -->
-    <string name="doze_brightness_title">Always on brightness</string>
-    <string name="doze_brightness_summary">%s mode is enabled</string>
-
     <!-- GameBar Overlay -->
     <string name="game_overlay_title">GameBar</string>
     <string name="game_overlay_summary">Enable the system overlay (FPS, Temp, etc.)</string>
