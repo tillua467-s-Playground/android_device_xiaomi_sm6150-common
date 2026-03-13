@@ -130,8 +130,7 @@ PRODUCT_COPY_FILES += \
 $(call inherit-product, hardware/dolby/dolby.mk)
 
 PRODUCT_PACKAGES += \
-    LunarisDolby \
-    DSPVolumeSynchronizer
+    LunarisDolby
 
 # DRM
 PRODUCT_PACKAGES += \
