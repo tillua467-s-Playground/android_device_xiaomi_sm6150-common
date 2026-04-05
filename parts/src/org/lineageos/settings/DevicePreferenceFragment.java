@@ -32,12 +32,18 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragment;
 import androidx.preference.SwitchPreferenceCompat;
 
+import org.lineageos.settings.utils.FileUtils;
+
 public class DevicePreferenceFragment extends PreferenceFragment {
     private static final String OVERLAY_NO_FILL_PACKAGE = "org.lineageos.overlay.notch.nofill";
     private static final String KEY_PILL_STYLE_NOTCH = "pref_pill_style_notch";
 
+    private static final String KEY_BYPASS_CHARGING = "bypass_charging";
+    private static final String BYPASS_NODE = "/sys/class/power_supply/battery/input_suspend";
+
     private IOverlayManager mOverlayService;
     private SwitchPreferenceCompat mPrefPillStyleNotch;
+    private SwitchPreferenceCompat mPrefBypassCharging;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -54,6 +60,14 @@ public class DevicePreferenceFragment extends PreferenceFragment {
         addPreferencesFromResource(R.xml.device_prefs);
         mPrefPillStyleNotch = (SwitchPreferenceCompat) findPreference(KEY_PILL_STYLE_NOTCH);
         mPrefPillStyleNotch.setOnPreferenceChangeListener(PrefListener);
+
+        mPrefBypassCharging = (SwitchPreferenceCompat) findPreference(KEY_BYPASS_CHARGING);
+        if (FileUtils.fileExists(BYPASS_NODE)) {
+            mPrefBypassCharging.setOnPreferenceChangeListener(PrefListener);
+        } else {
+            mPrefBypassCharging.setEnabled(false);
+            mPrefBypassCharging.setSummary("Not supported by kernel");
+        }
     }
 
 
@@ -68,6 +82,11 @@ public class DevicePreferenceFragment extends PreferenceFragment {
             // We can do nothing
             }
         }
+
+    if (mPrefBypassCharging != null && FileUtils.fileExists(BYPASS_NODE)) {
+        String value = FileUtils.readOneLine(BYPASS_NODE);
+        mPrefBypassCharging.setChecked("1".equals(value));
+    }
     }
 
     private final Preference.OnPreferenceChangeListener PrefListener =
@@ -83,6 +102,8 @@ public class DevicePreferenceFragment extends PreferenceFragment {
                     } catch (RemoteException e) {
                         // We can do nothing
                     }
+                    } else if (KEY_BYPASS_CHARGING.equals(key)) {
+                        FileUtils.writeLine(BYPASS_NODE, (boolean) value ? "1" : "0");
                     }
                     return true;
                 }

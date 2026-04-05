@@ -41,4 +41,8 @@
     <string name="refresh_high">High (90Hz)</string>
     <string name="refresh_extreme">Smooth (120Hz)</string>
 
+    <!-- Bypass Charging Toggle -->
+    <string name="bypass_charging_title">Bypass charging</string>
+    <string name="bypass_charging_summary">Power the device directly from the charger to reduce battery heat and wear during Gameplay and other tasks</string>
+
 </resources>
