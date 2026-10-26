@@ -137,7 +137,6 @@ TARGET_RELEASETOOLS_EXTENSIONS := $(COMMON_PATH)
 
 # Sepolicy
 TARGET_SEPOLICY_DIR := msmsteppe
-include device/$(VENDOR_TARGET_DIR)/sepolicy/libion/sepolicy.mk
 include device/$(VENDOR_TARGET_DIR)/sepolicy/libperfmgr/sepolicy.mk
 include device/qcom/sepolicy_vndr/SEPolicy.mk
 
