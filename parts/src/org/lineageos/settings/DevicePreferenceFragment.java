@@ -17,6 +17,7 @@
 package org.lineageos.settings;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.om.IOverlayManager;
 import android.content.om.OverlayInfo;
 import android.os.Bundle;
@@ -54,6 +55,18 @@ public class DevicePreferenceFragment extends PreferenceFragment {
         addPreferencesFromResource(R.xml.device_prefs);
         mPrefPillStyleNotch = (SwitchPreferenceCompat) findPreference(KEY_PILL_STYLE_NOTCH);
         mPrefPillStyleNotch.setOnPreferenceChangeListener(PrefListener);
+
+        Preference charging = findPreference("pref_charging");
+        if (charging != null) {
+            charging.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    startActivity(new Intent(getActivity(),
+                            org.lineageos.settings.charging.ChargingActivity.class));
+                    return true;
+                }
+            });
+        }
     }
 
 

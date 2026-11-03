@@ -24,6 +24,9 @@ import android.util.Log;
 import org.lineageos.settings.doze.DozeUtils;
 import org.lineageos.settings.thermal.ThermalUtils;
 import org.lineageos.settings.refreshrate.RefreshUtils;
+import org.lineageos.settings.charging.ChargingConfig;
+import org.lineageos.settings.charging.ChargingController;
+import org.lineageos.settings.charging.ChargingService;
 
 public class BootCompletedReceiver extends BroadcastReceiver {
     private static final boolean DEBUG = false;
@@ -36,5 +39,13 @@ public class BootCompletedReceiver extends BroadcastReceiver {
         DozeUtils.onBootCompleted(context);
         ThermalUtils.startService(context);
         RefreshUtils.startService(context);
+
+        // Charging modes: hardware starts stock on every boot; only re-apply
+        // the saved mode when the device is actually charging.
+        if (!ChargingConfig.MODE_OFF.equals(ChargingConfig.mode(context))
+                && ChargingController.isCharging()) {
+            context.startForegroundService(
+                    new Intent(context, ChargingService.class));
+        }
     }
 }

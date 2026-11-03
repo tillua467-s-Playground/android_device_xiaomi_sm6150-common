@@ -25,4 +25,14 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:title="@string/charging_title">
+
+        <Preference
+            android:key="pref_charging"
+            android:title="@string/charging_title"
+            android:summary="@string/charging_summary"/>
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

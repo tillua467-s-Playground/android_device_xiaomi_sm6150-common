@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2026 The LineageOS Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+-->
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:title="@string/charging_title">
+
+    <Preference
+        android:key="chg_status"
+        android:title="@string/charging_status_title"
+        android:selectable="false"
+        android:summary="@string/charging_status_unknown" />
+
+    <ListPreference
+        android:key="chg_mode"
+        android:title="@string/charging_mode_title"
+        android:entries="@array/charging_mode_entries"
+        android:entryValues="@array/charging_mode_values"
+        android:defaultValue="off"
+        app:useSimpleSummaryProvider="true" />
+
+    <ListPreference
+        android:key="chg_limit_w"
+        android:title="@string/charging_limit_title"
+        android:defaultValue="20000"
+        app:useSimpleSummaryProvider="true" />
+
+    <ListPreference
+        android:key="chg_cool_temp"
+        android:title="@string/charging_cool_temp_title"
+        android:entries="@array/charging_cool_temp_entries"
+        android:entryValues="@array/charging_cool_temp_values"
+        android:defaultValue="380"
+        app:useSimpleSummaryProvider="true" />
+
+    <Preference
+        android:key="chg_info"
+        android:title="@string/charging_info_title"
+        android:summary="@string/charging_info_summary"
+        android:selectable="false" />
+
+</PreferenceScreen>

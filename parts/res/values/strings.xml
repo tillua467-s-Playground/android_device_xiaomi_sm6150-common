@@ -41,4 +41,46 @@
     <string name="refresh_high">High (90Hz)</string>
     <string name="refresh_extreme">Smooth (120Hz)</string>
 
+    <!-- Charging modes -->
+    <string name="charging_title">Charging</string>
+    <string name="charging_summary">Extreme, cool and fixed-wattage charging</string>
+    <string name="charging_status_title">Live status</string>
+    <string name="charging_status_unknown">Not charging</string>
+    <string name="charging_mode_title">Charging mode</string>
+    <string name="charging_limit_title">Force limit target</string>
+    <string name="charging_cool_temp_title">Cool charging target</string>
+    <string name="charging_info_title">About these modes</string>
+    <string name="charging_info_summary">Extreme charges as fast as the charger allows below 60%%. Cool keeps the battery near your target temperature. Force limit holds a fixed wattage. JEITA, the charger thermal regulation and the charge pump limits stay active in every mode.</string>
+    <string name="charging_tile_title">Extreme charging</string>
+
+    <string-array name="charging_mode_entries">
+        <item>Off (stock)</item>
+        <item>Extreme Charging</item>
+        <item>Cool Charging</item>
+        <item>Force Limit Charging</item>
+    </string-array>
+    <string-array name="charging_mode_values">
+        <item>off</item>
+        <item>extreme</item>
+        <item>cool</item>
+        <item>limit</item>
+    </string-array>
+
+    <string-array name="charging_cool_temp_entries">
+        <item>36 °C</item>
+        <item>38 °C</item>
+        <item>40 °C</item>
+    </string-array>
+    <string-array name="charging_cool_temp_values">
+        <item>360</item>
+        <item>380</item>
+        <item>400</item>
+    </string-array>
+
+    <string name="charging_extreme_title">Enable Extreme Charging?</string>
+    <string name="charging_extreme_message">Charges at the maximum the charger can supply. Only activates at or below 60%% battery, pauses when the battery reaches 43 °C, and turns itself off above 60%% or when unplugged.\n\nThe battery will get warm. Do not use a case that traps heat.</string>
+    <string name="charging_limit_title_warning">Force Limit Charging</string>
+    <string name="charging_limit_message">Holds charging at the wattage you select. Use a charger that can actually supply it — on a weaker charger the phone will fall short and you will be told.\n\nIf the device becomes too hot, this setting turns itself off automatically.</string>
+    <string name="charging_high_message">You selected a high wattage. The phone will run warm and may throttle itself. If it gets too hot this setting turns off automatically.</string>
+
 </resources>
