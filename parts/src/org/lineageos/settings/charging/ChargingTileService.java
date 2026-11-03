@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.service.quicksettings.Tile;
 import android.service.quicksettings.TileService;
 
+import org.lineageos.settings.R;
+
 public class ChargingTileService extends TileService {
     @Override
     public void onStartListening() {

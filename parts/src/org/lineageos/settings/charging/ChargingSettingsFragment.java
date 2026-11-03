@@ -17,6 +17,8 @@ import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragment;
 
+import org.lineageos.settings.R;
+
 public class ChargingSettingsFragment extends PreferenceFragment {
     private static final long REFRESH_MS = 2000;
 
