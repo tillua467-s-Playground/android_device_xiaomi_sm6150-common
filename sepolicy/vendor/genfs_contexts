@@ -81,21 +81,16 @@ genfscon sysfs /devices/virtual/input/input1/wakeup                       u:obje
 # Touchpanel
 genfscon sysfs /devices/virtual/touch/touch_dev/        u:object_r:sysfs_touchpanel:s0
 
-# XiaomiParts charging modes - exact nodes only
-genfscon sysfs /devices/platform/soc/c440000.qcom,spmi/spmi-0/spmi0-00/c440000.qcom,spmi:qcom,pm6150@0:qcom,qpnp-smb5/power_supply/battery/temp u:object_r:xiaomiparts_sysfs:s0
-genfscon sysfs /devices/platform/soc/c440000.qcom,spmi/spmi-0/spmi0-00/c440000.qcom,spmi:qcom,pm6150@0:qcom,qpnp-smb5/power_supply/battery/capacity u:object_r:xiaomiparts_sysfs:s0
-genfscon sysfs /devices/platform/soc/c440000.qcom,spmi/spmi-0/spmi0-00/c440000.qcom,spmi:qcom,pm6150@0:qcom,qpnp-smb5/power_supply/battery/status u:object_r:xiaomiparts_sysfs:s0
-genfscon sysfs /devices/platform/soc/c440000.qcom,spmi/spmi-0/spmi0-00/c440000.qcom,spmi:qcom,pm6150@0:qcom,qpnp-smb5/power_supply/battery/voltage_now u:object_r:xiaomiparts_sysfs:s0
-genfscon sysfs /devices/platform/soc/c440000.qcom,spmi/spmi-0/spmi0-00/c440000.qcom,spmi:qcom,pm6150@0:qcom,qpnp-smb5/power_supply/battery/current_now u:object_r:xiaomiparts_sysfs:s0
-genfscon sysfs /devices/platform/soc/c440000.qcom,spmi/spmi-0/spmi0-00/c440000.qcom,spmi:qcom,pm6150@0:qcom,qpnp-smb5/power_supply/battery/system_temp_level u:object_r:xiaomiparts_sysfs:s0
+# XiaomiParts charging modes.
+# Only nodes with NO other SELinux consumer are relabelled.  Relabelling
+# battery/capacity, current_now, status, voltage_now, usb/real_type,
+# cp_ilim, cp_enable or cooling_device13/cur_state removes them from
+# vendor_sysfs_battery_supply / vendor_sysfs_usb_supply / sysfs_thermal and
+# breaks hal_health (battery reported 0%), system_server, mi_thermald,
+# thermal-engine and hvdcp_opti.  Those stay on their inherited labels and
+# system_app is granted write directly in system_app.te.
+#
+# genfscon matches by path prefix, so keep these to leaf names that are not
+# a prefix of another node.
 genfscon sysfs /devices/platform/soc/c440000.qcom,spmi/spmi-0/spmi0-00/c440000.qcom,spmi:qcom,pm6150@0:qcom,qpnp-smb5/power_supply/battery/chg_mode_heartbeat u:object_r:xiaomiparts_sysfs:s0
-genfscon sysfs /devices/platform/soc/c440000.qcom,spmi/spmi-0/spmi0-00/c440000.qcom,spmi:qcom,pm6150@0:qcom,qpnp-smb5/power_supply/usb/voltage_now u:object_r:xiaomiparts_sysfs:s0
-genfscon sysfs /devices/platform/soc/c440000.qcom,spmi/spmi-0/spmi0-00/c440000.qcom,spmi:qcom,pm6150@0:qcom,qpnp-smb5/power_supply/usb/input_current_now u:object_r:xiaomiparts_sysfs:s0
-genfscon sysfs /devices/platform/soc/c440000.qcom,spmi/spmi-0/spmi0-00/c440000.qcom,spmi:qcom,pm6150@0:qcom,qpnp-smb5/power_supply/usb/real_type u:object_r:xiaomiparts_sysfs:s0
-genfscon sysfs /devices/platform/soc/c440000.qcom,spmi/spmi-0/spmi0-00/c440000.qcom,spmi:qcom,pm6150@0:qcom,qpnp-smb5/power_supply/usb/hvdcp3_type u:object_r:xiaomiparts_sysfs:s0
-genfscon sysfs /devices/platform/soc/c440000.qcom,spmi/spmi-0/spmi0-00/c440000.qcom,spmi:qcom,pm6150@0:qcom,qpnp-smb5/power_supply/usb/ctm_current_max u:object_r:xiaomiparts_sysfs:s0
-genfscon sysfs /devices/platform/soc/a8c000.i2c/i2c-2/2-0010/a8c000.i2c:qcom,smb1390@10:qcom,charge_pump/power_supply/charge_pump_master/cp_die_temp u:object_r:xiaomiparts_sysfs:s0
-genfscon sysfs /devices/platform/soc/a8c000.i2c/i2c-2/2-0010/a8c000.i2c:qcom,smb1390@10:qcom,charge_pump/power_supply/charge_pump_master/cp_ilim u:object_r:xiaomiparts_sysfs:s0
-genfscon sysfs /devices/platform/soc/a8c000.i2c/i2c-2/2-0010/a8c000.i2c:qcom,smb1390@10:qcom,charge_pump/power_supply/charge_pump_master/cp_enable u:object_r:xiaomiparts_sysfs:s0
 genfscon sysfs /module/qpnp_smb5/parameters/disable_thermal u:object_r:xiaomiparts_sysfs:s0
-genfscon sysfs /devices/virtual/thermal/cooling_device13/cur_state u:object_r:xiaomiparts_sysfs:s0

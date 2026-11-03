@@ -10,6 +10,28 @@ allow system_app { motor_device vendor_sysfs_graphics sysfs_leds }:dir search;
 allow system_app { cgroup vendor_sysfs_graphics }:file rw_file_perms;
 allow system_app { motor_device vendor_sysfs_graphics hall_device }:chr_file rw_file_perms;
 
-# XiaomiParts charging modes: only the nodes enumerated in genfs_contexts.
+# XiaomiParts charging modes.
+#
+# Only two nodes are relabelled to xiaomiparts_sysfs (see genfs_contexts):
+#   battery/chg_mode_heartbeat            - created by our kernel patch
+#   /module/qpnp_smb5/parameters/disable_thermal - never writable via sysfs
+#
+# Every other charging node keeps its stock label, because relabelling them
+# broke hal_health (battery reported 0%), system_server, mi_thermald,
+# thermal-engine, hvdcp_opti and vendor_qti_init_shell.  We only ever need
+# to WRITE a handful of them, and stock already grants system_app read on
+# vendor_sysfs_battery_supply / vendor_sysfs_usb_supply, so we add write on
+# those existing types instead of moving the files.
 allow system_app xiaomiparts_sysfs:file rw_file_perms;
-allow system_app { sysfs vendor_sysfs_battery_supply }:dir r_dir_perms;
+
+# Needed to walk to the nodes above.
+allow system_app sysfs:dir r_dir_perms;
+
+# Write access for the charging-mode actuator, on the stock labels.
+allow system_app vendor_sysfs_battery_supply:file w_file_perms;
+allow system_app vendor_sysfs_usb_supply:file w_file_perms;
+
+# system_temp_level and cooling_device* live under sysfs_thermal.  Writing
+# system_temp_level is what clears the THERMAL_DAEMON ICL/FCC votes.
+allow system_app sysfs_thermal:file w_file_perms;
+allow system_app sysfs_thermal:dir r_dir_perms;

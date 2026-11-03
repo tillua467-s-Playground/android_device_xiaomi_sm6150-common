@@ -57,8 +57,6 @@ public final class ChargingController {
             "/sys/class/power_supply/usb/real_type";
     private static final String DEF_HVDCP3_TYPE =
             "/sys/class/power_supply/usb/hvdcp3_type";
-    private static final String DEF_COOLING =
-            "/sys/class/thermal/cooling_device13/cur_state";
 
     private ChargingController() {
     }
@@ -125,8 +123,15 @@ public final class ChargingController {
         return read(p("cp_ilim", DEF_CP_ILIM));
     }
 
+    /**
+     * Reads the battery cooling device state.
+     *
+     * Not used: system_app has no read access to sysfs_thermal and granting it
+     * would mean relabelling cooling_device13, which broke hal_thermal and
+     * thermal-engine.  Kept for reference only.
+     */
     public static int coolingState() {
-        return read(p("cooling_battery", DEF_COOLING));
+        return -1;
     }
 
     public static boolean isCharging() {
@@ -218,14 +223,13 @@ public final class ChargingController {
     }
 
     public static void restoreStock() {
-        int cool = coolingState();
         clearOverride();
         write(p("ctm", DEF_CTM), -1);
         setCpEnabled(true);
         heartbeatDisarm();
-        if (cool >= 0) {
-            write(p("temp_level", DEF_TEMP_LEVEL), cool);
-        }
+        // Hand the thermal level back to mi_thermald: unblock its writes and
+        // reset the level so its next vote is applied from a clean state.
+        write(p("temp_level", DEF_TEMP_LEVEL), 0);
         write(p("disable_thermal", DEF_DISABLE_THERMAL), 0);
     }
 }
