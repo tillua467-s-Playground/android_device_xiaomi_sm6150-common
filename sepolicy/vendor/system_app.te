@@ -35,3 +35,12 @@ allow system_app vendor_sysfs_usb_supply:file w_file_perms;
 # system_temp_level is what clears the THERMAL_DAEMON ICL/FCC votes.
 allow system_app sysfs_thermal:file w_file_perms;
 allow system_app sysfs_thermal:dir r_dir_perms;
+
+# Directory traversal for the charging nodes above.  Without this the app is
+# denied { search } on the battery/usb power_supply directories and every read
+# underneath fails, leaving the controller blind.
+allow system_app { vendor_sysfs_battery_supply vendor_sysfs_usb_supply }:dir search;
+
+# Charging-mode configuration lives in its own property type instead of
+# borrowing persist.vendor.chg.*, which belongs to hvdcp_opti.
+allow system_app xiaomiparts_prop:file r_file_perms;

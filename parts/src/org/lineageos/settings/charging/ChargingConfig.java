@@ -34,20 +34,20 @@ public final class ChargingConfig {
     }
 
     public static boolean supported() {
-        return SystemProperties.getBoolean("ro.charging.modes.enabled", false);
+        return SystemProperties.getBoolean("ro.vendor.xiaomiparts.charging.modes.enabled", false);
     }
 
     public static String path(String key, String def) {
-        return SystemProperties.get("ro.charging.path." + key, def);
+        return SystemProperties.get("ro.vendor.xiaomiparts.charging.path." + key, def);
     }
 
-    /** persist.vendor.chg.<key> */
+    /** persist.vendor.xiaomiparts.chg.<key> */
     public static int value(String key, int def) {
-        return SystemProperties.getInt("persist.vendor.chg." + key, def);
+        return SystemProperties.getInt("persist.vendor.xiaomiparts.chg." + key, def);
     }
 
     public static String stringValue(String key, String def) {
-        return SystemProperties.get("persist.vendor.chg." + key, def);
+        return SystemProperties.get("persist.vendor.xiaomiparts.chg." + key, def);
     }
 
     public static int extremeMaxSoc() {
