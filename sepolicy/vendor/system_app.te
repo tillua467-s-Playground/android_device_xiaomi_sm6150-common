@@ -43,4 +43,4 @@ allow system_app { vendor_sysfs_battery_supply vendor_sysfs_usb_supply }:dir sea
 
 # Charging-mode configuration lives in its own property type instead of
 # borrowing persist.vendor.chg.*, which belongs to hvdcp_opti.
-allow system_app xiaomiparts_prop:file r_file_perms;
+get_prop(system_app, xiaomiparts_prop)
