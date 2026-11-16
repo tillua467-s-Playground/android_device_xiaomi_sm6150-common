@@ -1,0 +1,10 @@
+# /sys/class/wakeup/* are symlinks to per-device wakeupN directories created
+# by drivers/base/power/wakeup_stats.c under the owning device.  Those paths
+# are generic sysfs, so r_dir_file(system_suspend, sysfs_wakeup) in
+# system/sepolicy does not cover them and the suspend stats read is denied.
+#
+# Relabelling every device path is not expressible with a generic genfscon,
+# so allow the daemon to read them.  Read only - no write, no generic wildcard.
+# (device/xiaomi/sm8250-common does the same for the directory case.)
+allow system_suspend sysfs:dir { read open search };
+allow system_suspend sysfs:file r_file_perms;

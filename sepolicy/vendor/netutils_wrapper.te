@@ -1,0 +1,4 @@
+# iptables on this 4.14 kernel does not need CAP_SYS_ADMIN; the denial is
+# logspam only.  Same treatment as device/xiaomi/sm8250-common.
+# This is a dontaudit, NOT a grant - the capability is still refused.
+dontaudit netutils_wrapper self:capability { sys_admin };

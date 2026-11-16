@@ -28,8 +28,10 @@ allow system_app xiaomiparts_sysfs:file rw_file_perms;
 allow system_app sysfs:dir r_dir_perms;
 
 # Write access for the charging-mode actuator, on the stock labels.
+# Write was already granted for system_temp_level; read was not, and the
+# battery/status read was denied 24x in the log.  Add read only.
 allow system_app vendor_sysfs_battery_supply:file w_file_perms;
-allow system_app vendor_sysfs_usb_supply:file w_file_perms;
+allow system_app vendor_sysfs_battery_supply:file r_file_perms;
 
 # system_temp_level and cooling_device* live under sysfs_thermal.  Writing
 # system_temp_level is what clears the THERMAL_DAEMON ICL/FCC votes.

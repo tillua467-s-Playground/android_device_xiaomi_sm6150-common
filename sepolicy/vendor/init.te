@@ -4,3 +4,10 @@ dontaudit init firmware_file:filesystem getattr;
 allow init firmware_file:file mounton;
 allow init per_boot_file:file ioctl;
 allowxperm init per_boot_file:file ioctl { F2FS_IOC_SET_PIN_FILE };
+
+# Allow init to chown/chmod the charging nodes to system:system so the
+# controller (uid system) can write them.  setattr only - no read/write.
+# Precedent: device/xiaomi/peridot/sepolicy/vendor/init.te
+allow init vendor_sysfs_battery_supply:file setattr;
+allow init vendor_sysfs_usb_supply:file setattr;
+allow init xiaomiparts_sysfs:file setattr;

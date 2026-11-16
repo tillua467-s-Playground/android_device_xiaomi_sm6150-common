@@ -216,3 +216,27 @@ service vendor.nv_mac /vendor/bin/nv_mac
     user system
     group system inet net_admin wifi net_raw
     oneshot
+
+# XiaomiParts charging modes.
+#
+# The kernel creates power_supply attributes 0644 root:root
+# (power_supply_attr_is_visible() only adds S_IWUSR), the disable_thermal
+# module param 0600 and chg_mode_heartbeat 0200.  A controller running as uid
+# system therefore cannot write any of them, even with SELinux permissive.
+#
+# Triggered on boot_completed because the charge-pump and smb5 nodes are
+# registered asynchronously by their drivers; at 'on boot' they may not exist
+# yet.  setattr is granted in sepolicy/vendor/init.te.
+on property:sys.boot_completed=1
+    chown system system /sys/class/power_supply/battery/system_temp_level
+    chmod 0664 /sys/class/power_supply/battery/system_temp_level
+    chown system system /sys/class/power_supply/charge_pump_master/cp_ilim
+    chmod 0664 /sys/class/power_supply/charge_pump_master/cp_ilim
+    chown system system /sys/class/power_supply/charge_pump_master/cp_enable
+    chmod 0664 /sys/class/power_supply/charge_pump_master/cp_enable
+    chown system system /sys/class/power_supply/usb/ctm_current_max
+    chmod 0664 /sys/class/power_supply/usb/ctm_current_max
+    chown system system /sys/module/qpnp_smb5/parameters/disable_thermal
+    chmod 0664 /sys/module/qpnp_smb5/parameters/disable_thermal
+    chown system system /sys/class/power_supply/battery/chg_mode_heartbeat
+    chmod 0664 /sys/class/power_supply/battery/chg_mode_heartbeat
